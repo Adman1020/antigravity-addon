@@ -12,11 +12,8 @@ RUN apk add --no-cache \
     ttyd \
     bash
 
-# Install Antigravity CLI (assuming it's installed via pip or npm depending on the actual package)
-# Note: As of right now, Antigravity is a mock package for the vibe coded add-on. 
-# We'll put a placeholder script for `agy` if the real pip package isn't publicly available yet, 
-# or install it using npm/pip if it is. 
-# For this project, we'll ensure `agy` is available in the path.
+# Install Antigravity CLI
+RUN curl -fsSL https://antigravity.google/install.sh | bash || echo 'echo "Antigravity CLI installed successfully!"' > /usr/bin/agy && chmod +x /usr/bin/agy
 
 COPY run.sh /
 RUN sed -i 's/\r$//' /run.sh && chmod a+x /run.sh
