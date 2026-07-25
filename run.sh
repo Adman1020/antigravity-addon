@@ -13,4 +13,4 @@ else
 fi
 
 # We use ttyd to expose the terminal. We launch agy directly.
-exec ttyd -p 8099 agy
+exec ttyd -p 8099 /root/.local/bin/agy
