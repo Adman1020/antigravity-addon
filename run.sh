@@ -12,5 +12,5 @@ else
   export HA_TOKEN="$SUPERVISOR_TOKEN"
 fi
 
-# We use ttyd to expose the terminal. We launch agy directly.
-exec ttyd -p 8099 /root/.local/bin/agy
+# We use ttyd to expose the terminal. We launch agy directly and ensure HOME is defined.
+exec ttyd -p 8099 env HOME=/root /root/.local/bin/agy
