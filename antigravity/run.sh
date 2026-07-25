@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/with-contenv bash
 
 echo "Starting Antigravity Home Assistant Add-on..."
 
@@ -19,8 +19,8 @@ cat <<EOF > "$AGY_CONF_DIR/settings.json"
 {
   "mcpServers": {
     "homeassistant": {
-      "command": "npx",
-      "args": ["-y", "@homeassistant-ai/mcp-server-home-assistant"],
+      "command": "/usr/local/bin/uvx",
+      "args": ["ha-mcp"],
       "env": {
         "HA_URL": "$HA_URL",
         "HA_TOKEN": "$HA_TOKEN"

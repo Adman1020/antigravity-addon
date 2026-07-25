@@ -5,11 +5,12 @@ FROM $BUILD_FROM
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
-    nodejs \
-    npm \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Install uv (which brings its own python if needed)
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
 
 # Download pre-compiled ttyd (since it's not in standard debian repos by default)
 RUN curl -fsSL -o /usr/local/bin/ttyd https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.$(uname -m | sed -e 's/aarch64/aarch64/' -e 's/x86_64/x86_64/') && \
