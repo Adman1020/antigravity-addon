@@ -10,10 +10,15 @@ RUN apk add --no-cache \
     git \
     curl \
     ttyd \
-    bash
+    bash \
+    gcompat \
+    libc6-compat
 
-# Install Antigravity CLI
-RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
+# Install Antigravity CLI (Force glibc build despite being on Alpine/musl)
+RUN curl -fsSL https://antigravity.google/cli/install.sh -o install.sh && \
+    sed -i 's/platform="linux_${arch}_musl"/platform="linux_${arch}"/g' install.sh && \
+    bash install.sh && \
+    rm install.sh
 
 COPY run.sh /
 RUN sed -i 's/\r$//' /run.sh && chmod a+x /run.sh
