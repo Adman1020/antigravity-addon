@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/with-contenv bash
 
 echo "Starting Antigravity Home Assistant Add-on..."
 
@@ -11,23 +11,5 @@ else
   export HA_URL="http://supervisor/core"
   export HA_TOKEN="$SUPERVISOR_TOKEN"
 fi
-# Generate the Antigravity configuration file dynamically
-AGY_CONF_DIR="/root/.gemini/antigravity-cli"
-mkdir -p "$AGY_CONF_DIR"
-
-cat <<EOF > "$AGY_CONF_DIR/settings.json"
-{
-  "mcpServers": {
-    "homeassistant": {
-      "command": "npx",
-      "args": ["-y", "@homeassistant-ai/mcp-server-home-assistant"],
-      "env": {
-        "HA_URL": "$HA_URL",
-        "HA_TOKEN": "$HA_TOKEN"
-      }
-    }
-  }
-}
-EOF
 # We use ttyd to expose the terminal. We launch agy directly and ensure HOME is defined.
 exec ttyd -W -p 8099 env HOME=/root /root/.local/bin/agy

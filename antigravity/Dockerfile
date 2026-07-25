@@ -5,8 +5,6 @@ FROM $BUILD_FROM
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
-    nodejs \
-    npm \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
