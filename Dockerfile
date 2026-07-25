@@ -1,4 +1,4 @@
-ARG BUILD_FROM="homeassistant/amd64-base:latest"
+ARG BUILD_FROM="homeassistant/aarch64-base:latest"
 FROM $BUILD_FROM
 
 # Install dependencies
@@ -19,6 +19,6 @@ RUN apk add --no-cache \
 # For this project, we'll ensure `agy` is available in the path.
 
 COPY run.sh /
-RUN chmod a+x /run.sh
+RUN sed -i 's/\r$//' /run.sh && chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
