@@ -1,24 +1,24 @@
-ARG BUILD_FROM
+ARG BUILD_FROM="homeassistant/aarch64-base-debian:latest"
 FROM $BUILD_FROM
 
 # Install dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
-    py3-pip \
+    python3-pip \
     nodejs \
     npm \
     git \
     curl \
-    ttyd \
-    bash
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Antigravity CLI (assuming it's installed via pip or npm depending on the actual package)
-# Note: As of right now, Antigravity is a mock package for the vibe coded add-on. 
-# We'll put a placeholder script for `agy` if the real pip package isn't publicly available yet, 
-# or install it using npm/pip if it is. 
-# For this project, we'll ensure `agy` is available in the path.
+# Download pre-compiled ttyd (since it's not in standard debian repos by default)
+RUN curl -fsSL -o /usr/local/bin/ttyd https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.$(uname -m | sed -e 's/aarch64/aarch64/' -e 's/x86_64/x86_64/') && \
+    chmod +x /usr/local/bin/ttyd
+
+# Install Antigravity CLI
+RUN curl -fsSL https://antigravity.google/cli/install.sh | bash
 
 COPY run.sh /
-RUN chmod a+x /run.sh
+RUN sed -i 's/\r$//' /run.sh && chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
