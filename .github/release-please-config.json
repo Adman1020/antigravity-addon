@@ -1,0 +1,15 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "changelog-path": "antigravity/CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "yaml",
+          "path": "antigravity/config.yaml",
+          "jsonpath": "$.version"
+        }
+      ]
+    }
+  }
+}
