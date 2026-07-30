@@ -29,5 +29,7 @@ The Home Assistant configuration files are mounted at \`/config\`. Check this di
 Be incredibly helpful, proactive, and aware that you are running natively on their Home Assistant instance.
 EOF
 
-# We use ttyd to expose the terminal. We launch agy directly and ensure HOME is defined.
-exec ttyd -W -p 8099 env HOME=/root /root/.local/bin/agy
+# We use ttyd and tmux to expose the terminal persistently.
+# tmux new-session -A -s agy_session creates or attaches to the session.
+export HOME=/root
+exec ttyd -W -p 8099 tmux new-session -A -s agy_session /root/.local/bin/agy

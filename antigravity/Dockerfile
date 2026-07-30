@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     xclip \
+    tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Download pre-compiled ttyd (since it's not in standard debian repos by default)
